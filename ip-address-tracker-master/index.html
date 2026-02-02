@@ -44,21 +44,25 @@
   <body>
     <main>
       <section>
-        <form action="/search" method="get" id="search-form">
+        <form action="/search" method="get" id="search-form" novalidate>
           <h1>IP Address Tracker</h1>
-          <label for="searchInput"></label>
+          <label for="ipAddressInput"></label>
           <input
-            type="search"
-            id="searchInput"
-            name="search"
-            placeholder="Search for any IP address or domain"
+            type="text"
+            id="ipAddressInput"
+            name="ipAddress"
+            pattern="^(?>(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.){3}(?1)$" 
+            title="A valid IPv4 address (e.g., 192.168.1.1)"
+            placeholder="Search for any IP address or domain" required
           />
+         
           <button type="submit" id="search-button">
             <img src=".\images\icon-arrow.svg" />
           </button>
+           <span class="error-message" id="inputError" ></span>
         </form>
 
-        <div id ="api-data">
+        <div id="api-data">
           <!-- add offset value dynamically using the API -->
           <span>IP Address</span>
           <span>Location</span>
@@ -67,7 +71,6 @@
         </div>
 
         <div id="map"></div>
-
       </section>
     </main>
 

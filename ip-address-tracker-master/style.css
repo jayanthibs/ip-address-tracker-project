@@ -7,8 +7,15 @@ body{
     font-family: "Rubik", sans-serif;
 }
 
-#searchInput{
+#ipAddressInput{
     font-size: 18px;
+}
+.error-message {
+  display: block;
+  color: #e74c3c; /* Red for error messages */
+  font-size: 0.9em;
+  margin-top: 5px;
+  min-height: 1em; /* Reserve space to prevent layout shifts */
 }
 #api-data{
     border:5px solid black;
@@ -17,6 +24,7 @@ body{
     
 
 }
+
 span{
     border: 1px solid red;
 }

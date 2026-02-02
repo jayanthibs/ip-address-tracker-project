@@ -1,4 +1,41 @@
-import {key} from "./secret.js"
+import { key } from "./secret.js";
+const searchForm = document.getElementById("search-form");
+const ipAddressInput = document.getElementById("ipAddressInput");
+const searchButton = document.getElementById("search-button");
+
+const inputError = document.getElementById("inputError");
+
+const apiData = document.getElementById("api-data");
+const map = document.getElementById("map");
+
+function validateIPAddress() {
+  const regex = "^(?>(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.){3}(?1)$";
+  if (ipAddressInput.validity.valueMissing) {
+    ipAddressInput.setCustomValidity("IP Address is required");
+  } else if (ipAddressInput.value !== regex) {
+    ipAddressInput.setCustomValidity("Enter valid IP Address.");
+  } else {
+    ipAddressInput.setCustomValidity("");
+  }
+  inputError.textContent = ipAddressInput.validationMessage;
+  return ipAddressInput.checkValidity();
+}
+
+//adding event listener to validate the input field
+ipAddressInput.addEventListener("input", validateIPAddress);
+
+//adding event listener on the form to validate and search for IP Address
+searchForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const isIPAddressValid = validateIPAddress();
+
+  if (!isIPAddressValid) {
+    return;
+  }
+});
+
+
 
 
 
