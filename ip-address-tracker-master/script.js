@@ -81,16 +81,35 @@ function renderAPIData(data) {
 
 }
 
-// //Here we create a map in the 'map' div, add tiles of our choice, and then add a marker with some text in a popup:
-// let map = L.map('map').setView([0, 0], 2);
+//Here we create a map in the 'map' div, add tiles of our choice, and then add a marker with some text in a popup:
+let map = L.map('map').setView([0, 0], 2);
 
-// L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+L.marker([51.5, -0.09]).addTo(map)
+    .bindPopup('A pretty CSS popup.<br> Easily customizable.')
+    .openPopup();
+
+
+//     let map = L.map("map").setView([0, 0], 2); // default world view
+
+// L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+//   attribution:
+//     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 // }).addTo(map);
 
-// L.marker([51.5, -0.09]).addTo(map)
-//     .bindPopup('A pretty CSS popup.<br> Easily customizable.')
-//     .openPopup();
+// let marker;
 
+// function updateMap(lat, lng) {
+//   map.setView([lat, lng], 13);
+//   if (marker) {
+//     marker.setLatLng([lat, lng]);
+//   } else {
+//     marker = L.marker([lat, lng]).addTo(map);
+//   }
+// }
 
-
+// renderAPIData(data);           // update the info blocks
+// updateMap(data.location.lat, data.location.lng); // move map and marker
