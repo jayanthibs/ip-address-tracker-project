@@ -5,16 +5,14 @@ import { NetworkError, DataError } from "./error-handling.js";
 //selecting elements and assigning it to variables
 const searchForm = document.getElementById("search-form");
 const ipAddressInput = document.getElementById("ipAddressInput");
-const searchButton = document.getElementById("search-button");
+
 //selecting span element to show error messages
 const inputError = document.getElementById("inputError");
 
-const apiData = document.getElementById("api-data");
 const ipAddressSpan = document.getElementById("ip-address");
 const locationSpan = document.getElementById("location");
 const timezoneSpan = document.getElementById("timezone");
 const ispSpan = document.getElementById("isp");
-const mapSection = document.getElementById("map");
 
 //adding validateIPAddress function to validate the input filed
 function validateIPAddress() {
@@ -45,7 +43,7 @@ searchForm.addEventListener("submit", function (event) {
   }
   //calling the function to fetch API Data
   fetchAPIData(ipAddressInput.value);
-  searchForm.reset();
+  ipAddressInput.value = "";
 });
 
 //function to fetch API Data
@@ -55,9 +53,14 @@ async function fetchAPIData(ipAddress) {
       `https://geo.ipify.org/api/v2/country,city?apiKey=${key}&ipAddress=${ipAddress}`,
     );
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      throw new DataError(`API error: ${response.status}`);
     }
     const data = await response.json();
+
+    if (!data.location || !data.location.lat) {
+      throw new DataError("Invalid data received from API");
+    }
+
     console.log(data);
     //console.log(
     // `ip: ${data.ip}\nLocation: ${data.location.city}, ${data.location.region}\n${data.location.postalCode}\nTimeZone: UTC${data.location.timezone}\nisp: ${data.isp}`);
@@ -65,7 +68,6 @@ async function fetchAPIData(ipAddress) {
     renderAPIData(data);
 
     updateMap(data.location.lat, data.location.lng);
-
   } catch (error) {
     if (error instanceof NetworkError) {
       console.log("Network Error", error.message);
@@ -79,7 +81,7 @@ async function fetchAPIData(ipAddress) {
 
 function renderAPIData(data) {
   ipAddressSpan.textContent = data.ip;
-  locationSpan.textContent = `${data.location.city}, ${data.location.region}\n${data.location.postalCode}`;
+  locationSpan.textContent = `${data.location.city}, ${data.location.region} ${data.location.postalCode}`;
   timezoneSpan.textContent = `UTC ${data.location.timezone}`;
   ispSpan.textContent = data.isp;
 }
@@ -96,7 +98,6 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 // .bindPopup('A pretty CSS popup.<br> Easily customizable.')
 // .openPopup();
 
-
 // created variable and customized icon with different image
 const customIcon = L.icon({
   iconUrl: "./images/icon-location.svg", // path to your image
@@ -104,16 +105,10 @@ const customIcon = L.icon({
   iconAnchor: [20, 40], // point of the icon which corresponds to marker location
   popupAnchor: [0, -40], // point from which the popup should open
 });
-L.marker([40.71427, -74.00597], { icon: customIcon }).addTo(map);
-
+let marker = L.marker([40.71427, -74.00597], { icon: customIcon }).addTo(map);
 
 // creating updateMap function to update the location based on the IP Address
-let marker;
 function updateMap(lat, lng) {
   map.setView([lat, lng], 10);
-  if (marker) {
-    marker.setLatLng([lat, lng]);
-  } else {
-    marker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
-  }
+  marker.setLatLng([lat, lng]);
 }

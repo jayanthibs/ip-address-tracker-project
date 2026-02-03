@@ -68,6 +68,9 @@ h1 {
   word-break: break-word;
   white-space: normal;
 }
+#location {
+  white-space: pre-line;
+}
 
 #search-form {
   padding: 30px;
@@ -109,7 +112,10 @@ h1 {
   padding-right: 25px;
   border: none;
 }
-
+.combined-search button:hover,
+#ipAddressInput:hover {
+  cursor: pointer;
+}
 #map {
   width: 100%; /* full width of container */
   height: 530px; /* or any height you want */
