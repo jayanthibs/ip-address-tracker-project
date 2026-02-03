@@ -1,5 +1,7 @@
 //importing secret api key from secret.js file
 import { key } from "./secret.js";
+import { NetworkError, DataError } from "./error-handling.js";
+
 //selecting elements and assigning it to variables
 const searchForm = document.getElementById("search-form");
 const ipAddressInput = document.getElementById("ipAddressInput");
@@ -63,7 +65,7 @@ async function fetchAPIData(ipAddress) {
     renderAPIData(data);
 
     updateMap(data.location.lat, data.location.lng);
-    
+
   } catch (error) {
     if (error instanceof NetworkError) {
       console.log("Network Error", error.message);
