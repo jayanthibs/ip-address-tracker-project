@@ -8,7 +8,11 @@ const searchButton = document.getElementById("search-button");
 const inputError = document.getElementById("inputError");
 
 const apiData = document.getElementById("api-data");
-const map = document.getElementById("map");
+const ipAddressSpan = document.getElementById("ip-address");
+const locationSpan = document.getElementById("location");
+const timezoneSpan = document.getElementById("timezone");
+const ispSpan = document.getElementById("isp");
+const mapSection = document.getElementById("map");
 
 //adding validateIPAddress function to validate the input filed
 function validateIPAddress() {
@@ -37,10 +41,9 @@ searchForm.addEventListener("submit", function (event) {
   if (!isIPAddressValid) {
     return;
   }
-//calling the function to fetch API Data
+  //calling the function to fetch API Data
   fetchAPIData(ipAddressInput.value);
 });
-
 
 //function to fetch API Data
 async function fetchAPIData(ipAddress) {
@@ -52,10 +55,12 @@ async function fetchAPIData(ipAddress) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const data = await response.json();
-    console.log(data);
-    console.log(
-      `ip: ${data.ip}\nLocation: ${data.location.city}, ${data.location.region}\n${data.location.postalCode}\nTimeZone: UTC${data.location.timezone}\nisp: ${data.isp}`);
-    
+    //console.log(data);
+    //console.log(
+    // `ip: ${data.ip}\nLocation: ${data.location.city}, ${data.location.region}\n${data.location.postalCode}\nTimeZone: UTC${data.location.timezone}\nisp: ${data.isp}`);
+
+    renderAPIData(data);
+
   } catch (error) {
     if (error instanceof NetworkError) {
       console.log("Network Error", error.message);
@@ -67,9 +72,17 @@ async function fetchAPIData(ipAddress) {
   }
 }
 
+function renderAPIData(data) {
+
+  ipAddressSpan.textContent = data.ip;
+  locationSpan.textContent = `${data.location.city}, ${data.location.region}\n${data.location.postalCode}`;
+  timezoneSpan.textContent = `UTC ${data.location.timezone}`;
+  ispSpan.textContent = data.isp;
+
+}
 
 // //Here we create a map in the 'map' div, add tiles of our choice, and then add a marker with some text in a popup:
-// var map = L.map('map').setView([51.505, -0.09], 13);
+// let map = L.map('map').setView([0, 0], 2);
 
 // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -78,3 +91,6 @@ async function fetchAPIData(ipAddress) {
 // L.marker([51.5, -0.09]).addTo(map)
 //     .bindPopup('A pretty CSS popup.<br> Easily customizable.')
 //     .openPopup();
+
+
+

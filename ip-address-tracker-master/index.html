@@ -62,13 +62,34 @@
           <span class="error-message" id="inputError"></span>
         </form>
 
-        <div id="api-data">
-          <!-- add offset value dynamically using the API -->
-          <span>IP Address</span>
-          <span>Location</span>
-          <span>Timezone</span>
-          <span> ISP</span>
-        </div>
+        
+          <div id="api-data">
+            <div class="info-item">
+              <span class="label">IP Address</span>
+              <span id="ip-address" class="value">—</span>
+            </div>
+
+            <div class="info-item">
+              <span class="label">Location</span>
+              <span id="location" class="value">—</span>
+            </div>
+
+            <div class="info-item">
+              <span class="label">Timezone</span>
+              <span id="timezone" class="value">—</span>
+            </div>
+
+            <div class="info-item">
+              <span class="label">ISP</span>
+              <span id="isp" class="value">—</span>
+            </div>
+          </div>
+          <!-- add offset value dynamically using the API
+          <span id="ip-address">IP Address</span>
+          <span id="location">Location</span>
+          <span id="timezone">Timezone</span>
+          <span id="isp"> ISP</span> -->
+        
 
         <div id="map"></div>
       </section>
