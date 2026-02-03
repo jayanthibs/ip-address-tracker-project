@@ -90,7 +90,7 @@ h1 {
 #map {
   
   width: 100%;       /* full width of container */
-  height: 400px;     /* or any height you want */
+  height: 500px;     /* or any height you want */
   z-index: 0;
 
 }
