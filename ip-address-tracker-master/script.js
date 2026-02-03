@@ -43,6 +43,7 @@ searchForm.addEventListener("submit", function (event) {
   }
   //calling the function to fetch API Data
   fetchAPIData(ipAddressInput.value);
+  searchForm.reset();
 });
 
 //function to fetch API Data
@@ -62,6 +63,7 @@ async function fetchAPIData(ipAddress) {
     renderAPIData(data);
 
     updateMap(data.location.lat, data.location.lng);
+    
   } catch (error) {
     if (error instanceof NetworkError) {
       console.log("Network Error", error.message);
@@ -92,6 +94,8 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 // .bindPopup('A pretty CSS popup.<br> Easily customizable.')
 // .openPopup();
 
+
+// created variable and customized icon with different image
 const customIcon = L.icon({
   iconUrl: "./images/icon-location.svg", // path to your image
   iconSize: [30, 25], // size of the icon
@@ -101,10 +105,10 @@ const customIcon = L.icon({
 L.marker([40.71427, -74.00597], { icon: customIcon }).addTo(map);
 
 
-
+// creating updateMap function to update the location based on the IP Address
 let marker;
 function updateMap(lat, lng) {
-  map.setView([lat, lng], 13);
+  map.setView([lat, lng], 10);
   if (marker) {
     marker.setLatLng([lat, lng]);
   } else {
