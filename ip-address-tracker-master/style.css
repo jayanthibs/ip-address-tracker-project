@@ -44,7 +44,6 @@ h1 {
   flex-direction: column;
   gap: 6px;
   border-right: 2px solid var(--Dark-Gray);
-  padding: 5px;
 }
 
 .info-item:last-child {
@@ -100,7 +99,7 @@ h1 {
   max-width: 400px;
   width: 100%;
   font-size: 18px;
-  }
+}
 
 .combined-search button {
   border-left: none;
@@ -134,7 +133,7 @@ h1 {
   #search-form {
     background-image: url(./images/pattern-bg-mobile.png);
   }
-  .value{
+  .value {
     font-size: 1rem;
   }
 }

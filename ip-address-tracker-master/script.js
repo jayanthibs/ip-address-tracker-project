@@ -35,9 +35,7 @@ ipAddressInput.addEventListener("input", validateIPAddress);
 //adding event listener on the form to validate and search for IP Address
 searchForm.addEventListener("submit", function (event) {
   event.preventDefault();
-
   const isIPAddressValid = validateIPAddress();
-
   if (!isIPAddressValid) {
     return;
   }
@@ -47,11 +45,16 @@ searchForm.addEventListener("submit", function (event) {
 });
 
 //function to fetch API Data
-async function fetchAPIData(ipAddress) {
+async function fetchAPIData(ipAddress = "") {
   try {
-    const response = await fetch(
-      `https://geo.ipify.org/api/v2/country,city?apiKey=${key}&ipAddress=${ipAddress}`,
-    );
+    const url = ipAddress
+      ? `https://geo.ipify.org/api/v2/country,city?apiKey=${key}&ipAddress=${ipAddress}`
+      : `https://geo.ipify.org/api/v2/country,city?apiKey=${key}`;
+
+    const response = await fetch(url);
+    // const response = await fetch(
+    //   `https://geo.ipify.org/api/v2/country,city?apiKey=${key}&ipAddress=${ipAddress}`,
+    // );
     if (!response.ok) {
       throw new DataError(`API error: ${response.status}`);
     }
@@ -87,7 +90,7 @@ function renderAPIData(data) {
 }
 
 //Here we create a map in the 'map' div, add tiles of our choice, and then add a marker with some text in a popup:
-let map = L.map("map").setView([40.71427, -74.00597], 10);
+let map = L.map("map").setView([0, 0], 2);
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution:
@@ -105,10 +108,15 @@ const customIcon = L.icon({
   iconAnchor: [20, 40], // point of the icon which corresponds to marker location
   popupAnchor: [0, -40], // point from which the popup should open
 });
-let marker = L.marker([40.71427, -74.00597], { icon: customIcon }).addTo(map);
+let marker = L.marker([0, 0], { icon: customIcon }).addTo(map);
 
 // creating updateMap function to update the location based on the IP Address
 function updateMap(lat, lng) {
-  map.setView([lat, lng], 10);
+  map.setView([lat, lng], 13);
   marker.setLatLng([lat, lng]);
 }
+
+//loading page with user's current location
+window.addEventListener("DOMContentLoaded", () => {
+  fetchAPIData(); // fetch user's current IP location
+});
