@@ -51,22 +51,22 @@
             type="text"
             id="ipAddressInput"
             name="ipAddress"
-            pattern="^(?>(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.){3}(?1)$" 
             title="A valid IPv4 address (e.g., 192.168.1.1)"
-            placeholder="Search for any IP address or domain" required
+            placeholder="Search for any IP address or domain"
+            required
           />
-         
+
           <button type="submit" id="search-button">
             <img src=".\images\icon-arrow.svg" />
           </button>
-           <span class="error-message" id="inputError" ></span>
+          <span class="error-message" id="inputError"></span>
         </form>
 
         <div id="api-data">
           <!-- add offset value dynamically using the API -->
           <span>IP Address</span>
           <span>Location</span>
-          <span>Timezone UTC</span>
+          <span>Timezone</span>
           <span> ISP</span>
         </div>
 
