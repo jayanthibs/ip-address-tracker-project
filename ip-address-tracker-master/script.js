@@ -14,6 +14,26 @@ const locationSpan = document.getElementById("location");
 const timezoneSpan = document.getElementById("timezone");
 const ispSpan = document.getElementById("isp");
 
+
+//Here we create a map in the 'map' div, add tiles of our choice, and then add a marker with some text in a popup:
+let map = L.map("map").setView([0, 0], 2);
+
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution:
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+}).addTo(map);
+
+
+// created variable and customized icon with different image
+const customIcon = L.icon({
+  iconUrl: "./images/icon-location.svg", // path to your image
+  iconSize: [30, 25], // size of the icon
+  iconAnchor: [20, 40], // point of the icon which corresponds to marker location
+  popupAnchor: [0, -40], // point from which the popup should open
+});
+let marker = L.marker([0, 0], { icon: customIcon }).addTo(map);
+
+
 //adding validateIPAddress function to validate the input filed
 function validateIPAddress() {
   const regex =
@@ -71,6 +91,7 @@ async function fetchAPIData(ipAddress = "") {
     renderAPIData(data);
 
     updateMap(data.location.lat, data.location.lng);
+
   } catch (error) {
     if (error instanceof NetworkError) {
       console.log("Network Error", error.message);
@@ -89,26 +110,7 @@ function renderAPIData(data) {
   ispSpan.textContent = data.isp;
 }
 
-//Here we create a map in the 'map' div, add tiles of our choice, and then add a marker with some text in a popup:
-let map = L.map("map").setView([0, 0], 2);
 
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution:
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-}).addTo(map);
-
-//L.marker([51.5, -0.09]).addTo(map);
-// .bindPopup('A pretty CSS popup.<br> Easily customizable.')
-// .openPopup();
-
-// created variable and customized icon with different image
-const customIcon = L.icon({
-  iconUrl: "./images/icon-location.svg", // path to your image
-  iconSize: [30, 25], // size of the icon
-  iconAnchor: [20, 40], // point of the icon which corresponds to marker location
-  popupAnchor: [0, -40], // point from which the popup should open
-});
-let marker = L.marker([0, 0], { icon: customIcon }).addTo(map);
 
 // creating updateMap function to update the location based on the IP Address
 function updateMap(lat, lng) {
