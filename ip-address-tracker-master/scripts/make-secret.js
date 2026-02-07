@@ -16,3 +16,4 @@ const outPath = path.join(__dirname, "..", "ip-address-tracker-master", "secret.
 
 fs.writeFileSync(outPath, out);
 console.log("secret.js generated");
+
