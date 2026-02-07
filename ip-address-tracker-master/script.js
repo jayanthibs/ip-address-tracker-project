@@ -3,6 +3,7 @@
 import { key } from "./secret.js";
 import { NetworkError, DataError } from "./error-handling.js";
 
+
 //selecting elements and assigning it to variables
 const searchForm = document.getElementById("search-form");
 const ipAddressInput = document.getElementById("ipAddressInput");
