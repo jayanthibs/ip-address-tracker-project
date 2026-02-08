@@ -4,6 +4,8 @@ IP Address Tracker is a web application that allows users to track IP addresses 
 
 Live Demo: (https://ip-address-tracker-jayanthi.netlify.app/)
 
+<img src="./ip-address-tracker-master/images/ip-address-tracker.jpg" width="300">
+
 Features:
 
 - Track user’s IP address automatically on page load
@@ -20,6 +22,7 @@ Setup:
    - Netlify deployment: Add IP_API_KEY in Site Settings → Build & deploy → Environment variables
    - Local testing: Run make-secret.js with your API key to generate secret.js
 3. Ensure netlify.toml is in the repo root with:
+
           [build]
           command = "node ip-address-tracker-master/scripts/make-secret.js"
           publish = "ip-address-tracker-master"
