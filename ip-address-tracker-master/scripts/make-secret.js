@@ -14,7 +14,7 @@ if (!apiKey) {
 const out = `export const API_KEY = "${apiKey}";\n`;
 
 // Adjust this path to where your front-end code expects secret.js
-const outPath = path.join(__dirname, "..", "ip-address-tracker-master", "secret.js");
+const outPath = path.join("ip-address-tracker-master", "secret.js");
 
 fs.writeFileSync(outPath, out);
 console.log("secret.js generated");
