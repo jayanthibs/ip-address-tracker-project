@@ -1,6 +1,6 @@
 //importing secret api key from secret.js file
 
-import { key } from "./secret.js";
+import { API_KEY } from "./secret.js";
 import { NetworkError, DataError } from "./error-handling.js";
 
 
@@ -70,8 +70,8 @@ searchForm.addEventListener("submit", function (event) {
 async function fetchAPIData(ipAddress = "") {
   try {
     const url = ipAddress
-      ? `https://geo.ipify.org/api/v2/country,city?apiKey=${key}&ipAddress=${ipAddress}`
-      : `https://geo.ipify.org/api/v2/country,city?apiKey=${key}`;
+      ? `https://geo.ipify.org/api/v2/country,city?apiKey=${API_KEY}&ipAddress=${ipAddress}`
+      : `https://geo.ipify.org/api/v2/country,city?apiKey=${API_KEY}`;
 
     const response = await fetch(url);
     // const response = await fetch(
