@@ -75,9 +75,11 @@ async function fetchAPIData(ipAddress = "") {
       : `https://geo.ipify.org/api/v2/country,city?apiKey=${API_KEY}`;
 
     const response = await fetch(url);
+
     // const response = await fetch(
     //   `https://geo.ipify.org/api/v2/country,city?apiKey=${key}&ipAddress=${ipAddress}`,
     // );
+    
     if (!response.ok) {
       throw new DataError(`API error: ${response.status}`);
     }
@@ -105,6 +107,7 @@ async function fetchAPIData(ipAddress = "") {
   }
 }
 
+// creating function to render fetched API Data on the web page
 function renderAPIData(data) {
   ipAddressSpan.textContent = data.ip;
   locationSpan.textContent = `${data.location.city}, ${data.location.region} ${data.location.postalCode}`;
