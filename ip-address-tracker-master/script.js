@@ -3,7 +3,6 @@
 import { API_KEY } from "./secret.js";
 import { NetworkError, DataError } from "./error-handling.js";
 
-
 //selecting elements and assigning it to variables
 const searchForm = document.getElementById("search-form");
 const ipAddressInput = document.getElementById("ipAddressInput");
@@ -16,7 +15,6 @@ const locationSpan = document.getElementById("location");
 const timezoneSpan = document.getElementById("timezone");
 const ispSpan = document.getElementById("isp");
 
-
 //Here we create a map in the 'map' div, add tiles of our choice, and then add a marker with some text in a popup:
 let map = L.map("map").setView([0, 0], 2);
 
@@ -24,7 +22,6 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution:
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
-
 
 // created variable and customized icon with different image
 const customIcon = L.icon({
@@ -35,15 +32,19 @@ const customIcon = L.icon({
 });
 let marker = L.marker([0, 0], { icon: customIcon }).addTo(map);
 
-
 //adding validateIPAddress function to validate the input filed
 function validateIPAddress() {
-  const regex =
+  // IPv4 Regex
+  const ipv4Regex =
     /^(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$/;
+  // IPv6 Regex
+  const ipv6Regex =
+    /^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|::1|::|([0-9a-fA-F]{1,4}:){1,7}:|:([0-9a-fA-F]{1,4}:){1,7}|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,3}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,2}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|([0-9a-fA-F]{1}:){1}(:[0-9a-fA-F]{1,4}){1,6}|:((:[0-9a-fA-F]{1,4}){1,7}|:))$/;
+  const value = ipAddressInput.value.trim();
   if (ipAddressInput.validity.valueMissing) {
     ipAddressInput.setCustomValidity("IP Address is required");
-  } else if (!regex.test(ipAddressInput.value)) {
-    ipAddressInput.setCustomValidity("Enter valid IP Address.");
+  } else if (!ipv4Regex.test(value) && !ipv6Regex.test(value)) {
+    ipAddressInput.setCustomValidity("Enter valid IPv4 or IPv6 address.");
   } else {
     ipAddressInput.setCustomValidity("");
   }
@@ -52,7 +53,7 @@ function validateIPAddress() {
 }
 
 //adding event listener to validate the input field
-ipAddressInput.addEventListener("input", validateIPAddress);
+ipAddressInput.addEventListener("blur", validateIPAddress);
 
 //adding event listener on the form to validate and search for IP Address
 searchForm.addEventListener("submit", function (event) {
@@ -93,7 +94,6 @@ async function fetchAPIData(ipAddress = "") {
     renderAPIData(data);
 
     updateMap(data.location.lat, data.location.lng);
-
   } catch (error) {
     if (error instanceof NetworkError) {
       console.log("Network Error", error.message);
@@ -111,8 +111,6 @@ function renderAPIData(data) {
   timezoneSpan.textContent = `UTC ${data.location.timezone}`;
   ispSpan.textContent = data.isp;
 }
-
-
 
 // creating updateMap function to update the location based on the IP Address
 function updateMap(lat, lng) {
