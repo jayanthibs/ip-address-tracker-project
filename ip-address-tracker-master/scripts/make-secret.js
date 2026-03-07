@@ -5,10 +5,10 @@ const fs = require("fs");
 const path = require("path");
 
 // Name of your env var as set in Netlify (example: IP_API_KEY)
-const apiKey = process.env.IP_API_KEY || "";
+const apiKey = process.env.API_KEY || "";
 
 if (!apiKey) {
-  console.warn("Warning: IP_API_KEY is empty");
+  console.warn("Warning: API_KEY is empty");
 }
 
 const out = `export const API_KEY = "${apiKey}";\n`;
