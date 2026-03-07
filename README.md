@@ -4,7 +4,7 @@ IP Address Tracker is a web application that allows users to track IP addresses 
 
 Live Demo: (https://ip-address-tracker-jayanthi.netlify.app/)
 
-<img src="./ip-address-tracker-master/images/ip-address-tracker.jpg" width="300">
+<img src="./ip-address-tracker-master/images/ip-address-tracker.jpg" width="500">
 
 Features:
 
